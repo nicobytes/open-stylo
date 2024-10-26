@@ -1,5 +1,5 @@
-import { Bindings } from '@src/bindings';
+import type { Bindings } from "@src/bindings";
 
 export type App = {
-  Bindings: Bindings,
-}
+	Bindings: Bindings;
+};
