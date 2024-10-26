@@ -651,9 +651,9 @@ workerd@1.20241022.0:
     "@cloudflare/workerd-linux-arm64" "1.20241022.0"
     "@cloudflare/workerd-windows-64" "1.20241022.0"
 
-wrangler@^3.79.0:
+wrangler@3.83.0:
   version "3.83.0"
-  resolved "https://registry.yarnpkg.com/wrangler/-/wrangler-3.83.0.tgz#bebe3d0067f3430cf6f0b2e8e4ab648c208e002b"
+  resolved "https://registry.npmjs.org/wrangler/-/wrangler-3.83.0.tgz#bebe3d0067f3430cf6f0b2e8e4ab648c208e002b"
   integrity sha512-qDzdUuTngKqmm2OJUZm7Gk4+Hv37F2nNNAHuhIgItEIhxBdOVDsgKmvpd+f41MFxyuGg3fbGWYANHI+0V2Z5yw==
   dependencies:
     "@cloudflare/kv-asset-handler" "0.3.4"
