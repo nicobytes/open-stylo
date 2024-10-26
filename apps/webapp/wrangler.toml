@@ -1,9 +1,6 @@
 name = "stylo-webapp"
 compatibility_date = "2024-03-28"
 pages_build_output_dir = "./dist/webapp/browser"
-routes = [
-  { pattern = "webapp.styloapp.co/*", zone_name = "styloapp.co" }
-]
 
 [env.production]
 compatibility_date = "2024-03-28"
