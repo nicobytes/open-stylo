@@ -1,15 +1,19 @@
 import { END } from "@langchain/langgraph";
 import { GraphState } from "../graph.state";
+import { MyNodes } from "../nodes";
 
-export const shouldContinueNode = (state: GraphState) => {
+export const toolFinalPath = [MyNodes.TOOLS, END];
+
+export const toolRouter = (state: GraphState) => {
 	const { messages } = state;
-	const lastMessage = messages[messages.length - 1];
+	const lastMessage = messages.at(-1);
 	if (
+		lastMessage &&
 		"tool_calls" in lastMessage &&
 		Array.isArray(lastMessage.tool_calls) &&
 		lastMessage.tool_calls?.length
 	) {
-		return "tools";
+		return MyNodes.TOOLS;
 	}
 	return END;
 };

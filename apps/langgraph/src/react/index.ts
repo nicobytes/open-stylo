@@ -15,7 +15,7 @@ import { getLLM } from "./../utils/getModel";
 
 const tools = [getWeather, getCoolestCities];
 
-const llm = getLLM("openai").bindTools(tools);
+const llm = getLLM().bindTools(tools);
 
 const toolNode = new ToolNode(tools);
 

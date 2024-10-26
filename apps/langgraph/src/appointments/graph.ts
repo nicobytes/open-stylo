@@ -1,24 +1,28 @@
-import {
-	END,
-	START,
-	StateGraph
-} from "@langchain/langgraph";
-import { ToolNode } from "@langchain/langgraph/prebuilt";
+import { END, START, StateGraph } from "@langchain/langgraph";
 import { MemorySaver } from "@langchain/langgraph";
 
 import { GraphState } from "./graph.state";
-import { agentNode, tools } from "./nodes/agent.node";
-import { shouldContinueNode } from "./nodes/shouldContinue.node";
 
-const toolNode = new ToolNode(tools);
+import { MyNodes } from "./nodes";
+import { toolNode } from "./nodes/tool.node";
+import { availabilityNode } from "./nodes/availability.node";
+import { conversationalNode } from "./nodes/conversation.node";
+
+import { toolRouter } from "./routers/tool.router";
+import { intentRouter } from "./routers/intent.router";
+
 const memory = new MemorySaver();
 
-// Define a new graph
 const workflow = new StateGraph(GraphState)
-	.addNode("agent", agentNode)
-	.addNode("tools", toolNode)
-	.addEdge(START, "agent")
-	.addConditionalEdges("agent", shouldContinueNode, ["tools", END])
-	.addEdge("tools", "agent");
+	.addNode(MyNodes.BOOKING, availabilityNode)
+	.addNode(MyNodes.CONVERSATION, conversationalNode)
+	.addNode(MyNodes.TOOLS, toolNode)
+	.addConditionalEdges(START, intentRouter, [
+		MyNodes.BOOKING,
+		MyNodes.CONVERSATION,
+	])
+	.addConditionalEdges(MyNodes.BOOKING, toolRouter, [MyNodes.TOOLS, END])
+	.addEdge(MyNodes.TOOLS, MyNodes.BOOKING)
+	.addEdge(MyNodes.CONVERSATION, END);
 
 export const graph = workflow.compile({ checkpointer: memory });
