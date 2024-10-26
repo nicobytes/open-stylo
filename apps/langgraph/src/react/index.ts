@@ -6,20 +6,16 @@ import {
 	MessagesAnnotation,
 } from "@langchain/langgraph";
 import { ToolNode } from "@langchain/langgraph/prebuilt";
+import { MemorySaver } from "@langchain/langgraph";
 
 import { getWeather } from "./tools/wheater.tool";
 import { getCoolestCities } from "./tools/cities.tool";
 
-import { ChatMistralAI } from "@langchain/mistralai";
+import { getLLM } from "./../utils/getModel";
 
 const tools = [getWeather, getCoolestCities];
 
-const llm = new ChatMistralAI({
-	model: "mistral-large-latest",
-	temperature: 0,
-	maxRetries: 2,
-	apiKey: process.env.MISTRAL_API_KEY,
-}).bindTools(tools);
+const llm = getLLM("openai").bindTools(tools);
 
 const toolNode = new ToolNode(tools);
 
@@ -48,6 +44,8 @@ const callModel = async (state: GraphState) => {
 	return { messages: response };
 };
 
+const memory = new MemorySaver();
+
 // Define a new graph
 const workflow = new StateGraph(MessagesAnnotation)
 	.addNode("agent", callModel)
@@ -56,4 +54,4 @@ const workflow = new StateGraph(MessagesAnnotation)
 	.addConditionalEdges("agent", shouldContinue, ["tools", END])
 	.addEdge("tools", "agent");
 
-export const graph = workflow.compile();
+export const graph = workflow.compile({ checkpointer: memory });
