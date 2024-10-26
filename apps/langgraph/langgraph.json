@@ -1,0 +1,12 @@
+{
+    "node_version": "20",
+    "dockerfile_lines": [],
+    "graphs": {
+      "simple": "./src/simple/index.ts:graph",
+      "react": "./src/react/index.ts:graph"
+    },
+    "env": ".env",
+    "dependencies": [
+      "."
+    ]
+  }

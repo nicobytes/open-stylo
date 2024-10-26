@@ -14,7 +14,8 @@
     "jsx": "react-jsx",
     "jsxImportSource": "hono/jsx",
     "paths": {
-      "@src/*": ["./src/*"]
+      "@src/*": ["./src/*"],
+      "@chatbot/*": ["./src/chatbot/*"],
     }
   },
 }

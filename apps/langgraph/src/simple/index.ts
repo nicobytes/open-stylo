@@ -1,4 +1,4 @@
-import { END, START, StateGraph, Annotation } from "@langchain/langgraph"
+import { END, START, StateGraph, Annotation } from "@langchain/langgraph";
 
 const GraphState = Annotation.Root({
 	message: Annotation<string>(),
