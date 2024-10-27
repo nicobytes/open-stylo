@@ -42,12 +42,13 @@ app.post("/webhook", async (c) => {
 			}),
 		});
 
-        if (response.status !== 200) {
-            console.error(response.statusText);
-        }
+		if (response.status !== 200) {
+			console.error(response.statusText);
+		}
 	}
 
 	c.status(200);
+	return c.text("ok");
 });
 
 export default app;
