@@ -4,7 +4,7 @@ import { checkAvailabilityTool } from "../tools/checkAvailability.tool";
 import { GraphState } from "../graph.state";
 import { SystemMessage } from "@langchain/core/messages";
 import { MyNodes } from ".";
-import { ChatOpenAI } from "@langchain/openai";
+import { models } from "../getModels";
 
 const SYSTEM_PROMPT = (formattedDate: string) => {
 	return `You are expert assistant for checking the availability of Sander's, a hairdressing salon in Cochabamba (Bolivia). To help customers check availability for appointments, you ask them for the date they would like to book an appointment.
@@ -19,23 +19,21 @@ const SYSTEM_PROMPT = (formattedDate: string) => {
 - MUST call the function "check_availability" to check the availability of the salon.`;
 };
 
-export const availabilityNode = (llm: ChatOpenAI) => {
-	return async (state: GraphState) => {
-		const { messages } = state;
+export const availabilityNode = async (state: GraphState) => {
+	const { messages } = state;
 
-		const formattedDate = formatDate(new Date(), "yyyy-MM-dd");
-		const systemPrompt = SYSTEM_PROMPT(formattedDate);
-		llm.bindTools([checkAvailabilityTool]);
+	const formattedDate = formatDate(new Date(), "yyyy-MM-dd");
+	const systemPrompt = SYSTEM_PROMPT(formattedDate);
+	const llm = models.gpt4().bindTools([checkAvailabilityTool]);
 
-		let trimmedHistory = messages;
-		if (trimmedHistory.at(-1)?.getType() === "ai") {
-			trimmedHistory = trimmedHistory.slice(0, -1);
-		}
+	let trimmedHistory = messages;
+	if (trimmedHistory.at(-1)?.getType() === "ai") {
+		trimmedHistory = trimmedHistory.slice(0, -1);
+	}
 
-		const response = await llm.invoke([
-			new SystemMessage(systemPrompt),
-			...trimmedHistory.filter((m) => m.getType() !== "system"),
-		]);
-		return { messages: response, lastAgent: MyNodes.AVAILABILITY };
-	};
+	const response = await llm.invoke([
+		new SystemMessage(systemPrompt),
+		...trimmedHistory.filter((m) => m.getType() !== "system"),
+	]);
+	return { messages: response, lastAgent: MyNodes.AVAILABILITY };
 };

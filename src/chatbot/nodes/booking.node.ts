@@ -2,9 +2,8 @@ import { SystemMessage } from "@langchain/core/messages";
 
 import { MyNodes } from ".";
 import { GraphState } from "../graph.state";
-import { models } from "../getModel";
 import { bookAppointmentTool } from "../tools/bookAppointment.tool";
-import { ChatOpenAI } from "@langchain/openai";
+import { models } from "../getModels";
 
 const SYSTEM_PROMPT = () => {
 	return `You are Expert Assistant for booking an appointment at Sander's, a hairdressing salon in Cochabamba (Bolivia).
@@ -19,26 +18,24 @@ To book an appointment, you ask for the date and the name of the client
 - Your answers must be in Spanish.`;
 };
 
-export const bookingNode = (llm: ChatOpenAI) => {
-	return async (state: GraphState) => {
-		const { messages } = state;
+export const bookingNode = async (state: GraphState) => {
+	const { messages } = state;
 
-		const systemPrompt = SYSTEM_PROMPT();
-		llm.bindTools([bookAppointmentTool]);
+	const systemPrompt = SYSTEM_PROMPT();
+	const llm = models.gpt4().bindTools([bookAppointmentTool]);
 
-		let trimmedHistory = messages;
-		if (trimmedHistory.at(-1)?.getType() === "ai") {
-			trimmedHistory = trimmedHistory.slice(0, -1);
-		}
+	let trimmedHistory = messages;
+	if (trimmedHistory.at(-1)?.getType() === "ai") {
+		trimmedHistory = trimmedHistory.slice(0, -1);
+	}
 
-		const response = await llm.invoke([
-			new SystemMessage(systemPrompt),
-			...trimmedHistory.filter((m) => m.getType() !== "system"),
-		]);
-		return {
-			messages: response,
-			lastAgent: MyNodes.BOOKING,
-			isReadyToBook: true,
-		};
+	const response = await llm.invoke([
+		new SystemMessage(systemPrompt),
+		...trimmedHistory.filter((m) => m.getType() !== "system"),
+	]);
+	return {
+		messages: response,
+		lastAgent: MyNodes.BOOKING,
+		isReadyToBook: true,
 	};
 };

@@ -2,7 +2,7 @@ import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { prettyJSON } from "hono/pretty-json";
-import 'dotenv/config';
+import "dotenv/config";
 
 import chatbot from "./chatbot";
 import api from "./api";

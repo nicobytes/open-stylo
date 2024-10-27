@@ -1,0 +1,11 @@
+{
+    "node_version": "20",
+    "dockerfile_lines": [],
+    "graphs": {
+      "appointment": "./src/chatbot/graph.ts:graph"
+    },
+    "env": ".env",
+    "dependencies": [
+      "."
+    ]
+  }

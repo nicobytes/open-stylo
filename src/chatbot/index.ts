@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import { grap } from "./graph";
+import { graph } from "./graph";
 import { HumanMessage } from "@langchain/core/messages";
 
 const app = new Hono();
@@ -37,12 +37,11 @@ app.post("/webhook", async (c) => {
 		headers.append("Authorization", `Bearer ${fbToken}`);
 		headers.append("Content-Type", "application/json");
 
-		const agent = grap;
 		const userMessage = message.text.body;
 		const threadId = `thread_state_${message.from}`;
 		const config = { configurable: { thread_id: threadId } };
 
-		const agentResponse = await agent.invoke(
+		const agentResponse = await graph.invoke(
 			{ messages: [new HumanMessage(userMessage)] },
 			config,
 		);

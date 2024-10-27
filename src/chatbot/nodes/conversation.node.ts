@@ -1,6 +1,6 @@
-import { ChatMistralAI } from "@langchain/mistralai";
 import { MyNodes } from ".";
 import { GraphState } from "../graph.state";
+import { models } from "../getModels";
 
 const SUPPORT_PROMPT = `You are frontline support for Sander's, a hair salon in Cochabamba (Bolivia).
 You can chat with customers and help them with basic questions, do not try to answer the question directly or gather information. 
@@ -20,17 +20,17 @@ You can chat with customers and help them with basic questions, do not try to an
 Hola, soy SanderBot, tu asistente virtual. ¿En qué puedo ayudarte hoy?
 `;
 
-export const conversationalNode = (llm: ChatMistralAI) => {
-	return async (state: GraphState) => {
-		const { messages } = state;
-		const response = await llm.invoke([
-			{ role: "system", content: SUPPORT_PROMPT },
-			...messages,
-		]);
+export const conversationalNode = async (state: GraphState) => {
+	const { messages } = state;
 
-		return {
-			messages: response,
-			lastAgent: MyNodes.CONVERSATION,
-		};
+	const llm = models.mistral();
+	const response = await llm.invoke([
+		{ role: "system", content: SUPPORT_PROMPT },
+		...messages,
+	]);
+
+	return {
+		messages: response,
+		lastAgent: MyNodes.CONVERSATION,
 	};
 };

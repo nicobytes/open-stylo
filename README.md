@@ -1,13 +1,21 @@
-![cover](/images/presentation.png)
+![cover](/public/images/presentation.png)
 
-# AI Interview Simulator
+# Detalles tecnicos
 
-AI Interview Simulator is an web application designed to improve your interview preparation. Using AI technology, it analyzes your answers and provides constructive feedback on how to improve. Using your device's camera and microphone, this tool provides a comprehensive, real-time assessment to help you excel in your next interview.
+Stylo está basado principalmente en agentes orquestados por LangGraph, un motor que nos permite crear diferentes agentes con herramientas específicas. Cada agente se encarga de una tarea en particular y puede interactuar con otros agentes. En esta oportunidad, logramos integrarlo con la API de WhatsApp Business para enviar y recibir mensajes
+
+![cover](/public/images/image1.jpg)
+
+Aqui podemos ver una video de como usando LangGraph puedo ver como interactuan los agentes entre ellos, como los agentes usan las tools y como se colaboran entre ellos.
+
+https://youtu.be/hQ4VBACBiV4
+
+
 
 ## 🚀 Services
 
-- Backend: https://interview-api.nicobytes.com/
-- Frontend: https://interview.nicobytes.com/
+- Backend: https://ripe-kyrstin-nicobytes-9da8b8bf.koyeb.app/
+- Frontend: Whatsapp Business API
 
 ## 🧱 Stack
 

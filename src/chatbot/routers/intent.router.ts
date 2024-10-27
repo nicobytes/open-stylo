@@ -1,7 +1,6 @@
 import { GraphState } from "../graph.state";
-import { models } from "../getModel";
+import { models } from "../getModels";
 import { MyNodes } from "../nodes";
-import { ChatMistralAI } from "@langchain/mistralai";
 
 const CATEGORIZATION_SYSTEM_TEMPLATE = `You are a customer support routing expert.
 Your job is to determine if a customer support representative is routing a user to the:
@@ -21,42 +20,42 @@ If they want to route the user to the Rescheduling team, respond only with the w
 If they want to route the user to the Canceling team, respond only with the word "Canceling".
 Otherwise, respond only with the word "Conversation".`;
 
-export const intentRouter = (llm: ChatMistralAI) => {
-	return async (state: GraphState) => {
-		const { lastAgent, isReadyToBook } = state;
+export const intentRouter = async (state: GraphState) => {
+	const { lastAgent, isReadyToBook } = state;
 
-		if (lastAgent === MyNodes.AVAILABILITY || lastAgent === MyNodes.BOOKING) {
-			return lastAgent;
-		}
+	if (lastAgent === MyNodes.AVAILABILITY || lastAgent === MyNodes.BOOKING) {
+		return lastAgent;
+	}
 
-		const categorizationResponse = await llm.invoke(
-			[
-				{
-					role: "system",
-					content: CATEGORIZATION_SYSTEM_TEMPLATE,
-				},
-				...state.messages,
-				{
-					role: "user",
-					content: CATEGORIZATION_HUMAN_TEMPLATE,
-				},
-			],
+	const llm = models.mistral();
+
+	const categorizationResponse = await llm.invoke(
+		[
 			{
-				response_format: {
-					type: "json_object",
-				},
+				role: "system",
+				content: CATEGORIZATION_SYSTEM_TEMPLATE,
 			},
-		);
-		const categorizationOutput = JSON.parse(
-			categorizationResponse.content as string,
-		);
+			...state.messages,
+			{
+				role: "user",
+				content: CATEGORIZATION_HUMAN_TEMPLATE,
+			},
+		],
+		{
+			response_format: {
+				type: "json_object",
+			},
+		},
+	);
+	const categorizationOutput = JSON.parse(
+		categorizationResponse.content as string,
+	);
 
-		const intent = categorizationOutput.nextRepresentative;
-		if (intent.includes("Booking") && isReadyToBook) {
-			return MyNodes.BOOKING;
-		} else if (intent.includes("Booking") && !isReadyToBook) {
-			return MyNodes.AVAILABILITY;
-		}
-		return MyNodes.CONVERSATION;
-	};
+	const intent = categorizationOutput.nextRepresentative;
+	if (intent.includes("Booking") && isReadyToBook) {
+		return MyNodes.BOOKING;
+	} else if (intent.includes("Booking") && !isReadyToBook) {
+		return MyNodes.AVAILABILITY;
+	}
+	return MyNodes.CONVERSATION;
 };
