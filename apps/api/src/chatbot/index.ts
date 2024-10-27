@@ -35,7 +35,7 @@ app.post("/webhook", async (c) => {
 		const url = `https://graph.facebook.com/v20.0/${business_phone_number_id}/messages`;
 
 		const headers = new Headers();
-		headers.append("Authorization", `Bearer ${c.env.FB_TOKEN}`);
+		headers.append("Authorization", `Bearer ${fbToken}`);
 		headers.append("Content-Type", "application/json");
 
 		const agent = createGraph({ openAIKey, mistralKey });

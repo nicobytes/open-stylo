@@ -8,6 +8,10 @@ export const models = {
 			temperature: 0,
 			maxRetries: 2,
 			apiKey,
+			configuration: {
+				baseURL:
+					"https://gateway.ai.cloudflare.com/v1/b2bb1719bede14df8732870a3974b263/gateway/openai",
+			},
 		});
 	},
 	mistral: (apiKey: string) => {
@@ -16,6 +20,8 @@ export const models = {
 			temperature: 0,
 			maxRetries: 2,
 			apiKey,
+			endpoint:
+				"https://gateway.ai.cloudflare.com/v1/b2bb1719bede14df8732870a3974b263/gateway/mistral",
 		});
 	},
 };
