@@ -8,7 +8,8 @@ Stylo está basado principalmente en agentes orquestados por LangGraph, un motor
 
 Aquí podemos ver un video donde, usando LangGraph Studio para hacer debuging y se muestra cómo los agentes que creamos interactúan entre ellos, cómo utilizan las herramientas (call functions) e incluso cómo colaboran entre sí.
 
-https://youtu.be/hQ4VBACBiV4
+Demo LangGraph Studio: https://youtu.be/hQ4VBACBiV4
+Demo en Produccion con WhatsApp: https://youtu.be/qPAvGp7wlW0
 
 Si quieres probarlo desde [LangGraph Studio](https://studio.langchain.com/), primero debes clonar el repositorio y luego instalar LangGraph Studio. Después, solo necesitas seleccionar la carpeta del proyecto
 
@@ -24,6 +25,16 @@ Usamos el modelo de Mistral: `mistral-large-latest` en la mayoría de los agente
 
 ### CodeGPT
 
+Creemos dos agentes en CodeGPT para que nos ayudaran en esta hackathon:
+
+- LangGraphJS Agent: Alimenté a este agente con un gráfico del repositorio, ya que la documentación de LangGraphJS, al ser reciente, aún no está completa. Este agente nos ayudó a resolver problemas y proporcionó varios ejemplos útiles.
+
+![capture](/public/images/lang.png)
+
+- Sander’s Q&A: Creado para funcionar como agente de conversación, este agente utiliza un handbook para estilistas como fuente de información, lo cual le permite responder a preguntas de clientes. Sin embargo, no llegamos a implementarlo completamente en el proyecto.
+
+![capture](/public/images/qa.png)
+
 ## 🚀 Services
 
 - Backend: https://ripe-kyrstin-nicobytes-9da8b8bf.koyeb.app/
@@ -37,8 +48,6 @@ Usamos el modelo de Mistral: `mistral-large-latest` en la mayoría de los agente
   - LangGraphJS: [LangGraphJS](https://langchain-ai.github.io/langgraphjs/)
 
 ### Folder structure
-
-The frontend app is organized in the following folder structure:
 
 ```sh
 .
@@ -77,15 +86,12 @@ The frontend app is organized in the following folder structure:
 └── tsconfig.json
 ```
 
-## 🚀 Deployment
-
-This project was structured as a monorepo, with the frontend and backend in the same repository, and with Github actions to detect changes in the code and deploy the app to the cloud. As part of CI/CD, the project has a linter and build step before deploying the app. The project has automatic deployment to Cloudflare Workers for the API, the frontend in Cloudflare pages.
-
-![capture](/images/interview_ci.jpg)
-
 ### Equipo
 
-
-
+|  Zulema Vicente | Nicolas Molina  |
+| -------- | ------- |
+| UX/UI  | Developer    |
+| ![capture](/public/images/zule.jpeg) | ![capture](https://nicobytes.com/profile.jpg)    |
+| https://www.linkedin.com/in/vpzulema/ | https://www.linkedin.com/in/nicobytes/ |
 
 
