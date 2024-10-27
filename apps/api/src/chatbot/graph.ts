@@ -22,6 +22,7 @@ interface Props {
 }
 
 export const createGraph = (data: Props) => {
+	console.log("Creating graph with data", data.databaseUrl);
 	const checkpointer = PostgresSaver.fromConnString(data.databaseUrl);
 
 	const llmGpt4 = models.gpt4(data.openAIKey);
