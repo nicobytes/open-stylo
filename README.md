@@ -8,8 +8,8 @@ Stylo está basado principalmente en agentes orquestados por LangGraph, un motor
 
 Aquí podemos ver un video donde, usando LangGraph Studio para hacer debuging y se muestra cómo los agentes que creamos interactúan entre ellos, cómo utilizan las herramientas (call functions) e incluso cómo colaboran entre sí.
 
-Demo LangGraph Studio: https://youtu.be/hQ4VBACBiV4
-Demo en Produccion con WhatsApp: https://youtu.be/qPAvGp7wlW0
+- Demo LangGraph Studio: https://youtu.be/hQ4VBACBiV4
+- Demo en Produccion con WhatsApp: https://youtu.be/qPAvGp7wlW0
 
 Si quieres probarlo desde [LangGraph Studio](https://studio.langchain.com/), primero debes clonar el repositorio y luego instalar LangGraph Studio. Después, solo necesitas seleccionar la carpeta del proyecto
 
