@@ -2,6 +2,7 @@ import { Hono } from "hono";
 import type { App } from "@src/types";
 import { createGraph } from "./graph";
 
+
 const app = new Hono<App>();
 
 app.get("/", (c) => c.text("hello from chatbot"));
@@ -42,7 +43,7 @@ app.post("/webhook", async (c) => {
 		const userMessage = message.text.body;
 		const threadId = `thread_state_${message.from}`;
 		const history = `thread_history_${message.from}`;
-        const hummanMessage = {role:"humman", content: userMessage};
+        const hummanMessage = {role:"human", content: userMessage};
         const config = { configurable: { thread_id: threadId } };
 
         const initialStatus = await historyKV.get(threadId);
