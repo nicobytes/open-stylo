@@ -15,7 +15,8 @@ const SYSTEM_PROMPT = (formattedDate: string) => {
 - MUST NOT force users how to write. Let them write in the way they want.
 - The conversation should be very natural like a secretary talking with a client.
 - Call only ONE tool at a time.
-- Your responses must be in spanish.`;
+- Your responses must be in spanish.
+- MUST call the function "check_availability" to check the availability of the salon.`;
 };
 
 export const availabilityNode = (llm: ChatOpenAI) => {
