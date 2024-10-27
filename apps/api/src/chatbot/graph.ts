@@ -1,5 +1,5 @@
 import { END, START, StateGraph } from "@langchain/langgraph";
-import { SqliteSaver } from "@langchain/langgraph-checkpoint-sqlite";
+import { D1Saver } from "./saver";
 
 import { GraphState } from "./graph.state";
 
@@ -21,7 +21,7 @@ interface Props {
 }
 
 export const createGraph = (data: Props, db: D1Database) => {
-	const memory = new SqliteSaver(db);
+	const memory = new D1Saver(db);
 
 	const llmGpt4 = models.gpt4(data.openAIKey);
 	const llmMistral = models.mistral(data.mistralKey);

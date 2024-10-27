@@ -23,9 +23,7 @@ Otherwise, respond only with the word "Conversation".`;
 
 export const intentRouter = (llm: ChatMistralAI) => {
 	return async (state: GraphState) => {
-		const { lastAgent } = state;
-		// TODO:
-		const isReadyToBook = false;
+		const { lastAgent, isReadyToBook } = state;
 
 		if (lastAgent === MyNodes.AVAILABILITY || lastAgent === MyNodes.BOOKING) {
 			return lastAgent;
