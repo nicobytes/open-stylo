@@ -21,7 +21,7 @@ app.get("/webhook", (c) => {
 });
 
 app.post("/webhook", async (c) => {
-	const fbToken = c.env.FB_VERIFY_TOKEN;
+	const fbToken = c.env.FB_TOKEN;
 	const openAIKey = c.env.OPENAI_API_KEY;
 	const mistralKey = c.env.MISTRAL_API_KEY;
 
