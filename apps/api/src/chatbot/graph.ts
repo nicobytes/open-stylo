@@ -1,7 +1,5 @@
 import { END, START, StateGraph } from "@langchain/langgraph";
-import { PostgresSaver } from "@langchain/langgraph-checkpoint-postgres";
-import { SqliteSaver } from "@langchain/langgraph-checkpoint-sqlite";
-import { Client as LibsqlClient, createClient } from "@libsql/client/web";
+import { MemorySaver } from "@langchain/langgraph-checkpoint";
 
 import { GraphState } from "./graph.state";
 
@@ -20,11 +18,10 @@ import { models } from "./getModel";
 interface Props {
 	openAIKey: string;
 	mistralKey: string;
-	databaseUrl: string;
 }
 
 export const createGraph = (data: Props) => {
-	const checkpointer = PostgresSaver.fromConnString(data.databaseUrl);
+	const checkpointer = new MemorySaver();
 
 	const llmGpt4 = models.gpt4(data.openAIKey);
 	const llmMistral = models.mistral(data.mistralKey);
