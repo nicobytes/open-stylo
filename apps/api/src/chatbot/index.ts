@@ -64,12 +64,16 @@ app.post("/webhook", async (c) => {
 			}),
 		});
 
-        const finalState = await agent.getState(config);
-        kv.put(threadId, JSON.stringify(finalState));
-
-		if (response.status !== 200) {
+        if (response.status !== 200) {
 			console.error(response.statusText);
+            const message = await response.json();
+			console.error(message);
 		}
+
+        const finalState = await agent.getState(config);
+        await kv.put(threadId, JSON.stringify(finalState));
+
+		console.log("saved state");
 	}
 
 	c.status(200);
