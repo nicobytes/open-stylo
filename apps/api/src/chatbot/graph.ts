@@ -1,5 +1,5 @@
 import { END, START, StateGraph } from "@langchain/langgraph";
-import { MemorySaver } from '@langchain/langgraph-checkpoint';
+import { PostgresSaver } from "@langchain/langgraph-checkpoint-postgres";
 
 import { GraphState } from "./graph.state";
 
@@ -18,10 +18,11 @@ import { models } from "./getModel";
 interface Props {
 	openAIKey: string;
 	mistralKey: string;
+	databaseUrl: string;
 }
 
 export const createGraph = (data: Props) => {
-	const memory = new MemorySaver();
+	const checkpointer = PostgresSaver.fromConnString(data.databaseUrl);
 
 	const llmGpt4 = models.gpt4(data.openAIKey);
 	const llmMistral = models.mistral(data.mistralKey);
@@ -56,5 +57,5 @@ export const createGraph = (data: Props) => {
 			MyNodes.CONVERSATION,
 		]);
 
-	return workflow.compile({ checkpointer: memory });
+	return workflow.compile({ checkpointer });
 };

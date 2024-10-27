@@ -10,6 +10,7 @@
   "dependencies": {
     "@langchain/core": "^0.3.15",
     "@langchain/langgraph": "^0.2.18",
+    "@langchain/langgraph-checkpoint-postgres": "^0.0.2",
     "@langchain/langgraph-checkpoint-sqlite": "^0.1.2",
     "@langchain/mistralai": "^0.1.1",
     "@langchain/openai": "^0.3.11",

@@ -12,4 +12,5 @@ export type Bindings = {
 	FB_VERIFY_TOKEN: string;
 	HISTORY_KV: KVNamespace;
 	HISTORY_DB: D1Database;
+	DATABASE_URL: string;
 };
