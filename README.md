@@ -11,11 +11,7 @@ Aquí podemos ver un video donde, usando LangGraph Studio para hacer debuging y 
 - Demo LangGraph Studio: https://youtu.be/hQ4VBACBiV4
 - Demo en Produccion con WhatsApp: https://youtu.be/qPAvGp7wlW0
 
-El numero de WhatsApp para probar el chatbot https://wa.me/59162656635
-
-<a aria-label="Chat on WhatsApp" href="https://wa.me/59162656635?text=Hello">
-  <img alt="Chat on WhatsApp" src="WhatsAppButtonGreenLarge.svg" />
-</a>
+El numero de WhatsApp para probar el chatbot https://wa.me/59162656635?text=Hello
 
 Si quieres probarlo desde [LangGraph Studio](https://studio.langchain.com/), primero debes clonar el repositorio y luego instalar LangGraph Studio. Después, solo necesitas seleccionar la carpeta del proyecto
 
