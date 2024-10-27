@@ -40,9 +40,11 @@ app.post("/webhook", async (c) => {
 
 		const agent = createGraph({ openAIKey, mistralKey });
 		const userMessage = message.text.body;
-		const agentResponse = await agent.invoke({
-			messages: [new HumanMessage(userMessage)],
-		});
+		const threadId = `thread_${message.from}`;
+		const agentResponse = await agent.invoke(
+			{ messages: [new HumanMessage(userMessage)] },
+			{ configurable: { thread_id: threadId } },
+		);
 		const aiMessage = agentResponse?.messages?.at(-1)?.content;
 
 		const response = await fetch(url, {
