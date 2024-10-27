@@ -1,5 +1,5 @@
 import { MyNodes } from ".";
-import { getLLM } from "../../utils/getModel";
+import { models } from "../getModel";
 import { GraphState } from "../graph.state";
 
 const SUPPORT_PROMPT = `You are frontline support for Sander's, a hair salon in Cochabamba (Bolivia).
@@ -23,7 +23,7 @@ Hola, soy SanderBot, tu asistente virtual. ¿En qué puedo ayudarte hoy?
 export const conversationalNode = async (state: GraphState) => {
 	const { messages } = state;
 
-	const llm = getLLM();
+	const llm = models.mistral();
 	const response = await llm.invoke([
 		{ role: "system", content: SUPPORT_PROMPT },
 		...messages,

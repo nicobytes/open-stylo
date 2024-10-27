@@ -6,13 +6,13 @@ export const checkAvailabilityTool = tool(
 		const { desiredDate } = input;
 
 		return `This availability for ${desiredDate} is as follows:
-            Available slots: 9am, 10am, 11am, 12pm, 1pm, 2pm, 3pm, 4pm, 5pm`;
+			Available slots: 9am, 10am, 11am, 12pm, 1pm, 2pm, 3pm, 4pm, 5pm`;
 	},
 	{
 		name: "check_availability",
-		description: "Check availability for a specified date",
+		description: "Check availability for a desired date",
 		schema: z.object({
-			desiredDate: z.string().describe("desired date"),
+			desiredDate: z.string().date().describe("desired date"),
 		}),
 	},
 );

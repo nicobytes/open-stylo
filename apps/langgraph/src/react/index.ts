@@ -11,11 +11,16 @@ import { MemorySaver } from "@langchain/langgraph";
 import { getWeather } from "./tools/wheater.tool";
 import { getCoolestCities } from "./tools/cities.tool";
 
-import { getLLM } from "./../utils/getModel";
+import { ChatOpenAI } from "@langchain/openai";
 
 const tools = [getWeather, getCoolestCities];
 
-const llm = getLLM().bindTools(tools);
+const llm = new ChatOpenAI({
+	model: "gpt-4",
+	temperature: 0,
+	maxRetries: 2,
+	apiKey: process.env.OPENAI_API_KEY,
+}).bindTools(tools);
 
 const toolNode = new ToolNode(tools);
 

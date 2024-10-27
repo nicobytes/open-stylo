@@ -1,34 +1,35 @@
 import { GraphState } from "../graph.state";
-import { getLLM } from "../../utils/getModel";
+import { models } from "../getModel";
 import { MyNodes } from "../nodes";
 
-const CATEGORIZATION_SYSTEM_TEMPLATE = `You are an expert customer support routing system.
-Your job is to detect whether a customer support representative is routing a user to:
+const CATEGORIZATION_SYSTEM_TEMPLATE = `You are a customer support routing expert.
+Your job is to determine if a customer support representative is routing a user to the:
 
-- Availability team
-- Booking team
+- Booking or Scheduling Team
 - Rescheduling team
-- Canceling team
+- Cancellation team
 
-if the user request is not about related just responding conversationally.`;
+if the user's request is not related to the previous team and is just a conversational response.`;
+
 const CATEGORIZATION_HUMAN_TEMPLATE = `The previous conversation is an interaction between a customer support representative and a user.
-Extract whether the representative is routing the user to a billing or technical team, or whether they are just responding conversationally.
+Extract whether the representative is routing the user to a support team, or whether they are just responding conversationally.
 Respond with a JSON object containing a single key called "nextRepresentative" with one of the following values:
 
-If they want to route the user to the Availability tema, respond only with the word "Availability".
-If they want to route the user to the Booking team, respond only with the word "Booking".
+If they want to route the user to the Booking or Appointment team, respond only with the word "Booking".
 If they want to route the user to the Rescheduling team, respond only with the word "Rescheduling".
 If they want to route the user to the Canceling team, respond only with the word "Canceling".
-Otherwise, respond only with the word "RESPOND".`;
+Otherwise, respond only with the word "Conversation".`;
 
 export const intentRouter = async (state: GraphState) => {
 	const { lastAgent } = state;
+	// TODO:
+	const isReadyToBook = false;
 
-	if (lastAgent) {
+	if (lastAgent === MyNodes.AVAILABILITY || lastAgent === MyNodes.BOOKING) {
 		return lastAgent;
 	}
 
-	const llm = getLLM();
+	const llm = models.mistral();
 	const categorizationResponse = await llm.invoke(
 		[
 			{
@@ -52,8 +53,10 @@ export const intentRouter = async (state: GraphState) => {
 	);
 
 	const intent = categorizationOutput.nextRepresentative;
-	if (intent.includes("Booking")) {
+	if (intent.includes("Booking") && isReadyToBook) {
 		return MyNodes.BOOKING;
+	} else if (intent.includes("Booking") && !isReadyToBook) {
+		return MyNodes.AVAILABILITY;
 	}
 	return MyNodes.CONVERSATION;
 };

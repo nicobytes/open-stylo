@@ -19,6 +19,8 @@
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
     "@tsconfig/recommended": "^1.0.7",
-    "@types/node": "^22.8.1"
+    "@types/node": "^22.8.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.3"
   }
 }

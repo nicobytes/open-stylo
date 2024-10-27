@@ -1,16 +1,13 @@
 import { formatDate } from "date-fns";
 import { checkAvailabilityTool } from "../tools/checkAvailability.tool";
 
-import { getLLM } from "../../utils/getModel";
+import { models } from "../getModel";
 import { GraphState } from "../graph.state";
 import { SystemMessage } from "@langchain/core/messages";
 import { MyNodes } from ".";
 
 const SYSTEM_PROMPT = (formattedDate: string) => {
-	return `You are expert assistant to check the availability and book appointments for Sander's, a hair salon in Cochabamba (Bolivia).
-
-# GOAL
--  To help customers check availability for appointments, ask for the date and time they would like to book an appointment.
+	return `You are expert assistant for checking the availability of Sander's, a hairdressing salon in Cochabamba (Bolivia). To help customers check availability for appointments, you ask them for the date they would like to book an appointment.
 
 # RULES
 - As reference, today is ${formattedDate}.
@@ -18,18 +15,15 @@ const SYSTEM_PROMPT = (formattedDate: string) => {
 - MUST NOT force users how to write. Let them write in the way they want.
 - The conversation should be very natural like a secretary talking with a client.
 - Call only ONE tool at a time.
-- Your responses must be in spanish.
-- Keep a friendly, professional tone.
-- Avoid verbosity.`;
+- Your responses must be in spanish.`;
 };
 
 export const availabilityNode = async (state: GraphState) => {
 	const { messages } = state;
 
-	const today = new Date();
-	const formattedDate = formatDate(today, "yyyy-MM-dd HH:mm");
+	const formattedDate = formatDate(new Date(), "yyyy-MM-dd");
 	const systemPrompt = SYSTEM_PROMPT(formattedDate);
-	const llm = getLLM().bindTools([checkAvailabilityTool]);
+	const llm = models.gpt4().bindTools([checkAvailabilityTool]);
 
 	let trimmedHistory = messages;
 	if (trimmedHistory.at(-1)?.getType() === "ai") {
@@ -40,5 +34,5 @@ export const availabilityNode = async (state: GraphState) => {
 		new SystemMessage(systemPrompt),
 		...trimmedHistory.filter((m) => m.getType() !== "system"),
 	]);
-	return { messages: response, lastAgent: MyNodes.BOOKING };
+	return { messages: response, lastAgent: MyNodes.AVAILABILITY };
 };
