@@ -3,6 +3,7 @@ import { z } from "zod";
 
 export const checkAvailabilityTool = tool(
 	async (input) => {
+		// TODO: call API with DB to check availability
 		const { desiredDate } = input;
 
 		return `This availability for ${desiredDate} is as follows:

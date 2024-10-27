@@ -3,6 +3,7 @@ import { z } from "zod";
 
 export const bookAppointmentTool = tool(
 	async (input) => {
+		// TODO: call API with DB to book appointment
 		const { date, customerName } = input;
 		return `Appointment was scheduled for ${customerName} on ${date} 😋`;
 	},

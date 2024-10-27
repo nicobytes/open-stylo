@@ -6,10 +6,9 @@ Stylo está basado principalmente en agentes orquestados por LangGraph, un motor
 
 ![cover](/public/images/image1.jpg)
 
-Aqui podemos ver una video de como usando LangGraph puedo ver como interactuan los agentes entre ellos, como los agentes usan las tools y como se colaboran entre ellos.
+Aquí podemos ver un video donde, usando LangGraph Studio para hacer debuging y se muestra cómo los agentes que creamos interactúan entre ellos, cómo utilizan las herramientas (call functions) e incluso cómo colaboran entre sí.
 
 https://youtu.be/hQ4VBACBiV4
-
 
 
 ## 🚀 Services
