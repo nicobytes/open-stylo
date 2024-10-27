@@ -1,5 +1,4 @@
 export type Bindings = {
-	DB_STORE: D1Database;
 	JWT_SECRET: string;
 	CLOUDFLARE_ACCOUNT_ID: string;
 	CLOUDFLARE_API_TOKEN: string;
@@ -11,4 +10,6 @@ export type Bindings = {
 	R2_URL: string;
 	FB_TOKEN: string;
 	FB_VERIFY_TOKEN: string;
+	HISTORY_KV: KVNamespace;
+	HISTORY_DB: D1Database;
 };

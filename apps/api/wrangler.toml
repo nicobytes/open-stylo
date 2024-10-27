@@ -12,3 +12,12 @@ binding = "AI"
 [observability]
 enabled = true
 head_sampling_rate = 1
+
+[[kv_namespaces]]
+binding = "HISTORY_KV"
+id = "efd83beca3174ee2ba9bdeaf99f73b4d"
+
+[[d1_databases]]
+binding = "HISTORY_DB"
+database_name = "prod-d1-history"
+database_id = "482cf989-efd8-45ae-a3cd-5e5891a0e573"

@@ -24,6 +24,7 @@ app.post("/webhook", async (c) => {
 	const fbToken = c.env.FB_TOKEN;
 	const openAIKey = c.env.OPENAI_API_KEY;
 	const mistralKey = c.env.MISTRAL_API_KEY;
+	const d1 = c.env.HISTORY_DB;
 
 	const body = await c.req.json();
 	const message = body.entry?.[0]?.changes[0]?.value?.messages?.[0];
@@ -38,7 +39,7 @@ app.post("/webhook", async (c) => {
 		headers.append("Authorization", `Bearer ${fbToken}`);
 		headers.append("Content-Type", "application/json");
 
-		const agent = createGraph({ openAIKey, mistralKey });
+		const agent = createGraph({ openAIKey, mistralKey }, d1);
 		const userMessage = message.text.body;
 		const threadId = `thread_${message.from}`;
 		const agentResponse = await agent.invoke(

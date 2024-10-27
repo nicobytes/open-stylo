@@ -38,6 +38,7 @@ export const bookingNode = (llm: ChatOpenAI) => {
 		return {
 			messages: response,
 			lastAgent: MyNodes.BOOKING,
+			isReadyToBook: true,
 		};
 	};
 };
