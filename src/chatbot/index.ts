@@ -43,7 +43,7 @@ app.post("/webhook", async (c) => {
 		const config = { configurable: { thread_id: threadId } };
 
 		const agentResponse = await agent.invoke(
-			{ messages: new HumanMessage(userMessage) },
+			{ messages: [new HumanMessage(userMessage)] },
 			config,
 		);
 		const aiMessage = agentResponse?.messages?.at(-1)?.content;
@@ -53,7 +53,7 @@ app.post("/webhook", async (c) => {
 			body: JSON.stringify({
 				messaging_product: "whatsapp",
 				to: message.from,
-				text: { body: aiMessage.content },
+				text: { body: aiMessage },
 			}),
 		});
 
