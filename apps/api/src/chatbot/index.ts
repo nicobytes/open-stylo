@@ -1,5 +1,7 @@
 import { Hono } from "hono";
 import type { App } from "@src/types";
+import { createGraph } from "./graph";
+import { HumanMessage } from "@langchain/core/messages";
 
 const app = new Hono<App>();
 
@@ -19,6 +21,10 @@ app.get("/webhook", (c) => {
 });
 
 app.post("/webhook", async (c) => {
+	const fbToken = c.env.FB_VERIFY_TOKEN;
+	const openAIKey = c.env.OPENAI_API_KEY;
+	const mistralKey = c.env.MISTRAL_API_KEY;
+
 	const body = await c.req.json();
 	const message = body.entry?.[0]?.changes[0]?.value?.messages?.[0];
 
@@ -32,13 +38,20 @@ app.post("/webhook", async (c) => {
 		headers.append("Authorization", `Bearer ${c.env.FB_TOKEN}`);
 		headers.append("Content-Type", "application/json");
 
+		const agent = createGraph({ openAIKey, mistralKey });
+		const userMessage = message.text.body;
+		const agentResponse = await agent.invoke({
+			messages: [new HumanMessage(userMessage)],
+		});
+		const aiMessage = agentResponse?.messages?.at(-1)?.content;
+
 		const response = await fetch(url, {
 			method: "POST",
 			headers,
 			body: JSON.stringify({
 				messaging_product: "whatsapp",
 				to: message.from,
-				text: { body: "Echo: " + message.text.body },
+				text: { body: aiMessage },
 			}),
 		});
 
