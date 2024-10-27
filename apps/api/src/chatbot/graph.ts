@@ -23,9 +23,8 @@ interface Props {
 	databaseUrl: string;
 }
 
-export const createGraph = async (data: Props) => {
+export const createGraph = (data: Props) => {
 	const checkpointer = PostgresSaver.fromConnString(data.databaseUrl);
-	await checkpointer.setup();
 
 	const llmGpt4 = models.gpt4(data.openAIKey);
 	const llmMistral = models.mistral(data.mistralKey);

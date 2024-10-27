@@ -39,7 +39,7 @@ app.post("/webhook", async (c) => {
 		headers.append("Authorization", `Bearer ${fbToken}`);
 		headers.append("Content-Type", "application/json");
 
-		const agent = await createGraph({ openAIKey, mistralKey, databaseUrl });
+		const agent = createGraph({ openAIKey, mistralKey, databaseUrl });
 		const userMessage = message.text.body;
 		const threadId = `thread_${message.from}`;
         const config = { configurable: { thread_id: threadId } };
