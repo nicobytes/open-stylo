@@ -11,6 +11,12 @@ Aquí podemos ver un video donde, usando LangGraph Studio para hacer debuging y 
 - Demo LangGraph Studio: https://youtu.be/hQ4VBACBiV4
 - Demo en Produccion con WhatsApp: https://youtu.be/qPAvGp7wlW0
 
+El numero de WhatsApp para probar el chatbot https://wa.me/59162656635
+
+<a aria-label="Chat on WhatsApp" href="https://wa.me/59162656635?text=Hello">
+  <img alt="Chat on WhatsApp" src="WhatsAppButtonGreenLarge.svg" />
+</a>
+
 Si quieres probarlo desde [LangGraph Studio](https://studio.langchain.com/), primero debes clonar el repositorio y luego instalar LangGraph Studio. Después, solo necesitas seleccionar la carpeta del proyecto
 
 ### Requisitos
@@ -46,6 +52,7 @@ Creemos dos agentes en CodeGPT para que nos ayudaran en esta hackathon:
   - API: [HonoJS](https://honojs.com/)
   - LangChainJS: [LangChainJS](https://langchainjs.com/)
   - LangGraphJS: [LangGraphJS](https://langchain-ai.github.io/langgraphjs/)
+- Database: Postgres para guardar las conversaciones y el estado de interaccion de cada agente
 
 ### Folder structure
 
@@ -85,6 +92,18 @@ Creemos dos agentes en CodeGPT para que nos ayudaran en esta hackathon:
   └── index.ts
 └── tsconfig.json
 ```
+
+### Monitoreo
+
+Usamos langSmith para monitorear el estado de los agentes y la interaccion entre ellos en produccion.
+
+![capture](/public/images/monitor.png)
+
+### Retos
+
+- Desde el equipo de UX/UI, buscamos resolver un problema real. Por eso, este bot está diseñado considerando conversaciones con los dueños de [Sander'S Salón y Barbería](https://www.google.com/maps/place/Sander'S+Salón+y+Barbería/@-17.3877902,-66.1571303,15z/data=!4m2!3m1!1s0x0:0xf5e5aa8495b3b0d6?sa=X&ved=1t:2428&ictx=111), un salón de belleza en Cochabamba, Bolivia, que enfrenta este desafío
+
+- Inicialmente, con LangGraph es posible tener un agente con acceso a varias herramientas, utilizando una arquitectura tipo ReAct. Sin embargo, nos dimos cuenta de que, al agregar más herramientas a un mismo agente, este comenzaba a confundirse al momento de seleccionar la herramienta adecuada. Por esta razón, optamos por crear agentes individuales con una relación 1:1 (un agente por herramienta), de manera que cada agente se especializara en resolver un caso específico. El reto luego fue coordinar la interacción entre estos agentes en el momento adecuado. Finalmente, logramos hacerlo utilizando los mismos modelos de lenguaje (LLMs) para evaluar las conversaciones, junto con la capacidad de LangGraph para orquestar estos agentes en forma de nodos
 
 ### Equipo
 
