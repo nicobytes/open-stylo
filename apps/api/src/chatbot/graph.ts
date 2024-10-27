@@ -1,5 +1,5 @@
 import { END, START, StateGraph } from "@langchain/langgraph";
-import { D1Saver } from "./saver";
+import { MemorySaver } from '@langchain/langgraph-checkpoint';
 
 import { GraphState } from "./graph.state";
 
@@ -20,8 +20,8 @@ interface Props {
 	mistralKey: string;
 }
 
-export const createGraph = (data: Props, db: D1Database) => {
-	const memory = new D1Saver(db);
+export const createGraph = (data: Props) => {
+	const memory = new MemorySaver();
 
 	const llmGpt4 = models.gpt4(data.openAIKey);
 	const llmMistral = models.mistral(data.mistralKey);
